@@ -1,0 +1,61 @@
+class MachineTool:
+    def __init__(self, productivity, machine_cost, average_part_price):
+        self.productivity = productivity  # products per hour
+        self.machine_cost = machine_cost    # cost of the machine
+        self.average_part_price = average_part_price  # price of each part
+
+    def number_of_parts_for_payback(self):
+        """Calculate the number of parts needed for payback."""
+        return self.machine_cost / self.average_part_price
+
+    def payback_time(self):
+        """Calculate the payback time in hours at a fixed part price."""
+        if self.productivity == 0:
+            return float('inf')  # Avoid division by zero
+        return self.number_of_parts_for_payback() / self.productivity
+
+    def __str__(self):
+        return (f"MachineTool(productivity={self.productivity}, "
+                f"machine_cost={self.machine_cost}, "
+                f"average_part_price={self.average_part_price})")
+
+
+class MillingMachine(MachineTool):
+    def __init__(self, productivity, machine_cost, average_part_price, additional_feature):
+        super().__init__(productivity, machine_cost, average_part_price)
+        self.additional_feature = additional_feature  # Specific feature for milling machines
+
+    def __str__(self):
+        return (f"MillingMachine(productivity={self.productivity}, "
+                f"machine_cost={self.machine_cost}, "
+                f"average_part_price={self.average_part_price}, "
+                f"additional_feature={self.additional_feature})")
+
+
+class CNCMachine(MachineTool):
+    def __init__(self, productivity, machine_cost, average_part_price, software_version):
+        super().__init__(productivity, machine_cost, average_part_price)
+        self.software_version = software_version  # Specific feature for CNC machines
+
+    def __str__(self):
+        return (f"CNCMachine(productivity={self.productivity}, "
+                f"machine_cost={self.machine_cost}, "
+                f"average_part_price={self.average_part_price}, "
+                f"software_version={self.software_version})")
+
+
+def main():
+    milling_machine = MillingMachine(productivity=10, machine_cost=50000, average_part_price=20, additional_feature='High Precision')
+    cnc_machine = CNCMachine(productivity=15, machine_cost=80000, average_part_price=30, software_version='v2.5')
+
+    machines = [milling_machine, cnc_machine]
+
+    for machine in machines:
+        print(machine)
+        print(f"Number of parts for payback: {machine.number_of_parts_for_payback()}")
+        print(f"Payback time (in hours): {machine.payback_time()}\n")
+
+
+if __name__ == "__main__":
+    main()
+
